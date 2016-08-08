@@ -1,0 +1,16 @@
+{
+    "name": "ry/caracteres",
+    "description": "caracterizable items",
+    "type": "php, laravel5",
+    "authors": [
+        {
+            "name": "Landr Kotoarivelo",
+            "email": "landr@topmora.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    	"mcamara/laravel-localization": "*",
+    	"baum/baum": "*"
+    }
+}
