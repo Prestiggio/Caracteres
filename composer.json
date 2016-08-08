@@ -8,7 +8,6 @@
             "email": "landr@topmora.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
     	"mcamara/laravel-localization": "*",
     	"baum/baum": "*"

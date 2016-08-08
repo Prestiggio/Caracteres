@@ -1,5 +1,4 @@
 <?php
-
 namespace Ry\Caracteres\Providers;
 
 //use Illuminate\Support\ServiceProvider;
