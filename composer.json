@@ -8,6 +8,11 @@
             "email": "landr@topmora.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Ry\\Caracteres\\": "src/"
+        }
+    },
     "require": {
     	"mcamara/laravel-localization": "*",
     	"baum/baum": "*"
