@@ -4,11 +4,15 @@ namespace Ry\Caracteres\Models;
 
 use Baum\Node;
 use LaravelLocalization;
+use Ry\Medias\Models\Traits\MediableTrait;
+use Ry\Medias\Models\Media;
 
 /**
  * Characteristic
  */
 class Characteristic extends Node {
+	
+	use MediableTrait;
 	
 	/**
 	 * Table name.
@@ -17,7 +21,9 @@ class Characteristic extends Node {
 	 */
 	protected $table = 'characteristics';
 	
-	protected $visible = ["id", "term", "multiple", "active", "input"];
+	protected $visible = ["id", "term", "multiple", "active", "input", "icon"];
+	
+	protected $appends = ["icon"];
 	
 	protected $with = ["term"];
 	
@@ -61,6 +67,20 @@ class Characteristic extends Node {
 	}
 	public function terms() {
 		return $this->hasMany ( "Ry\Caracteres\Models\Characteristiclang", "characteristic_id" );
+	}
+	
+	public function getIconAttribute() {
+		if($this->medias->count()>0)
+			return $this->medias;
+		
+		$parent = $this->parent();
+		if($parent->exists())
+			return $parent->first()->getIconAttribute();
+		
+		$media = new Media();
+		$media->type = "image";
+		$media->path = "ico_autre.png";
+		return [$media];
 	}
 	
 }
