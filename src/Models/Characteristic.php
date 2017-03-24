@@ -19,7 +19,7 @@ class Characteristic extends Node {
 	 *
 	 * @var string
 	 */
-	protected $table = 'characteristics';
+	protected $table = 'ry_caracteres_characteristics';
 	
 	protected $visible = ["id", "term", "multiple", "active", "input", "icon"];
 	

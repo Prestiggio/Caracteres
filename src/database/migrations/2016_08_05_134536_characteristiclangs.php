@@ -12,7 +12,7 @@ class Characteristiclangs extends Migration
      */
     public function up()
     {
-        Schema::create('characteristiclangs', function (Blueprint $table) {
+        Schema::create('ry_caracteres_characteristiclangs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("characteristic_id");
             $table->integer("user_id");
@@ -31,6 +31,6 @@ class Characteristiclangs extends Migration
      */
     public function down()
     {
-        Schema::drop('characteristiclangs');
+        Schema::drop('ry_caracteres_characteristiclangs');
     }
 }

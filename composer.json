@@ -16,7 +16,7 @@
     "require": {
     	"mcamara/laravel-localization": "*",
     	"baum/baum": "*",
-    	"ry/medias": "dev-master"
+    	"ry/medias": "dev-prefixed"
     },
     "repositories": [
 	    {

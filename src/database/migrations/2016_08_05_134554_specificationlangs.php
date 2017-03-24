@@ -12,7 +12,7 @@ class Specificationlangs extends Migration
      */
     public function up()
     {
-        Schema::create('specificationlangs', function (Blueprint $table) {
+        Schema::create('ry_caracteres_specificationlangs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("specification_id");
             $table->integer("user_id");
@@ -29,6 +29,6 @@ class Specificationlangs extends Migration
      */
     public function down()
     {
-        Schema::drop('specificationlangs');
+        Schema::drop('ry_caracteres_specificationlangs');
     }
 }

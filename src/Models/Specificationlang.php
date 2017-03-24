@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Specificationlang extends Model {
 	
-	protected $table = "specificationlangs";
+	protected $table = "ry_caracteres_specificationlangs";
 	
 	private $fallback = "en";
 	

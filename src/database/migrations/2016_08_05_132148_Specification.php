@@ -12,7 +12,7 @@ class Specification extends Migration
      */
     public function up()
     {
-    	Schema::create('specifications', function (Blueprint $table) {
+    	Schema::create('ry_caracteres_specifications', function (Blueprint $table) {
     		$table->increments('id');
     		$table->integer("characteristic_id", false, true);
     		$table->char("characterizable_type")->nullable();
@@ -28,6 +28,6 @@ class Specification extends Migration
      */
     public function down()
     {
-        Schema::drop('specifications');
+        Schema::drop('ry_caracteres_specifications');
     }
 }

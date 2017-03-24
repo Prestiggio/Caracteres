@@ -9,7 +9,7 @@ class CreateCharacteristicsTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create ( 'characteristics', function (Blueprint $table) {
+		Schema::create ( 'ry_caracteres_characteristics', function (Blueprint $table) {
 			$table->increments ( 'id' );
 			$table->integer ( 'parent_id' )->nullable ()->index ();
 			$table->integer ( 'lft' )->nullable ()->index ();
@@ -28,6 +28,6 @@ class CreateCharacteristicsTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop ( 'characteristics' );
+		Schema::drop ( 'ry_caracteres_characteristics' );
 	}
 }

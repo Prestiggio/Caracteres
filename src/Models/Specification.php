@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Specification extends Model {
 	
-	protected $table = "specifications";
+	protected $table = "ry_caracteres_specifications";
 	
 	protected $fillable = ["characteristic_id"];
 	
