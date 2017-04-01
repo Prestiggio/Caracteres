@@ -6,13 +6,14 @@ use Baum\Node;
 use LaravelLocalization;
 use Ry\Medias\Models\Traits\MediableTrait;
 use Ry\Medias\Models\Media;
+use Ry\Caracteres\Models\Traits\RankableTrait;
 
 /**
  * Characteristic
  */
 class Characteristic extends Node {
 	
-	use MediableTrait;
+	use MediableTrait, RankableTrait;
 	
 	/**
 	 * Table name.
@@ -21,9 +22,9 @@ class Characteristic extends Node {
 	 */
 	protected $table = 'ry_caracteres_characteristics';
 	
-	protected $visible = ["id", "term", "multiple", "active", "input", "icon"];
+	protected $visible = ["id", "term", "multiple", "active", "input", "icon", "position"];
 	
-	protected $appends = ["icon"];
+	protected $appends = ["icon", "position"];
 	
 	protected $with = ["term"];
 	
