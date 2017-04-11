@@ -11,7 +11,7 @@ class Specificationlang extends Model {
 	
 	protected $fillable = ["user_id", "value", "lang"];
 	
-	protected $visible = ["value", "lang"];
+	protected $visible = ["id", "value", "lang"];
 	
 	public function specification() {
 		return $this->belongsToMany("Ry\Caracteres\Models\Specification", "specification_id");

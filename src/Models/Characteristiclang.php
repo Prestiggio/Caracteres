@@ -11,7 +11,7 @@ class Characteristiclang extends Model
 	
 	protected $fillable = ["user_id", "path", "name", "descriptif", "lang"];
 	
-	protected $visible = ["name", "link", "tree", "descriptif", "lang"];
+	protected $visible = ["id", "name", "link", "tree", "descriptif", "lang"];
 	
 	protected $appends = ["tree", "link"];
 	
