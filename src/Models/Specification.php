@@ -21,7 +21,7 @@ class Specification extends Model {
 	
 	public function term() {
 		return $this->hasOne ( "Ry\Caracteres\Models\Specificationlang", "specification_id" )->where ( function ($query) {
-			$query->where ( "lang", "=", LaravelLocalization::getCurrentLocale () );
+			$query->where ( "lang", "=", "fr");
 		} );
 	}
 	public function terms() {
