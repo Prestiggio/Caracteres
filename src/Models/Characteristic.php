@@ -26,7 +26,7 @@ class Characteristic extends Node {
 	
 	protected $appends = ["icon", "position"];
 	
-	protected $with = ["term"];
+	protected $with = ["term", "rank"];
 	
 	// ////////////////////////////////////////////////////////////////////////////
 	
@@ -63,7 +63,7 @@ class Characteristic extends Node {
 	// ////////////////////////////////////////////////////////////////////////////
 	public function term() {
 		return $this->hasOne ( "Ry\Caracteres\Models\Characteristiclang", "characteristic_id" )->where ( function ($query) {
-			$query->where ( "lang", "=", LaravelLocalization::getCurrentLocale () );
+			$query->where ( "lang", "=", "fr");
 		} );
 	}
 	public function terms() {

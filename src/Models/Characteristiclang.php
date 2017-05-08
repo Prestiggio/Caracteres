@@ -7,7 +7,7 @@ class Characteristiclang extends Model
 {
 	protected $table = "ry_caracteres_characteristiclangs";
 	
-	private $fallback = "en";
+	private $fallback = "fr";
 	
 	protected $fillable = ["user_id", "path", "name", "descriptif", "lang"];
 	
