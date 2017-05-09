@@ -5,6 +5,7 @@ namespace Ry\Caracteres\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use Ry\Caracteres\Models\Characteristiclang;
+use Ry\Caracteres\Models\Characteristic;
 
 class RyServiceProvider extends ServiceProvider
 {
@@ -49,6 +50,11 @@ class RyServiceProvider extends ServiceProvider
     	$this->publishes([
 	        	__DIR__.'/../database/migrations/' => database_path('migrations')
 	    ], 'migrations');
+    	
+    	Characteristic::saved(function($characteristic){
+    		foreach ($characteristic->terms as $term)
+    			$term->makepath();
+    	});
     }
 
     /**

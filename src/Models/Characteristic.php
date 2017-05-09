@@ -103,14 +103,12 @@ class Characteristic extends Node {
 						"type" => "image"
 				]);
 			}
-			if ($parent)
+			if ($parent) {
 				$me->makeChildOf ( $parent );
+				$me->save();
+			}
 			if (isset ( $node ["children"] ))
 				self::saveTree ( $node ["children"], $me );
-		}
-		if ($parent) {
-			foreach ( $parent->terms as $term )
-				$term->makepath ();
 		}
 	}
 	
