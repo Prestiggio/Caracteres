@@ -84,4 +84,53 @@ class Characteristic extends Node {
 		return [$media];
 	}
 	
+	public static function saveTree($ar, $parent = null) {
+		foreach ( $ar as $node ) {
+			$input = ["type" => "text"];
+			if(isset($node["input"])) {
+				if(is_string($node["input"]))
+					$input = ["type" => $node["input"]];
+				else
+					$input = $node["input"];
+			}
+				
+			$me = self::createCharacteristic( $node ["name"] , json_encode($input));
+			if(isset($node["icon"])) {
+				$me->medias()->create([
+						"owner_id" => 1,
+						"title" => $node["name"],
+						"path" => $node["icon"],
+						"type" => "image"
+				]);
+			}
+			if ($parent)
+				$me->makeChildOf ( $parent );
+			if (isset ( $node ["children"] ))
+				self::saveTree ( $node ["children"], $me );
+		}
+		if ($parent) {
+			foreach ( $parent->terms as $term )
+				$term->makepath ();
+		}
+	}
+	
+	private static function createCharacteristic($name, $input, $descriptif = "", $lang = null) {
+		$user_id = 1;
+		if (! $lang)
+			$lang = "fr";
+	
+		$characteristic = Characteristic::create ( [
+				"active" => 1,
+				"multiple" => 1,
+				"input" => $input
+		] );
+		$characteristic->terms ()->createMany ([[
+				"user_id" => $user_id,
+				"lang" => $lang,
+				"name" => $name,
+				"descriptif" => $descriptif
+		]]);
+		return $characteristic;
+	}
+	
 }
