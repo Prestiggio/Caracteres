@@ -103,10 +103,9 @@ class Characteristic extends Node {
 						"type" => "image"
 				]);
 			}
-			if ($parent) {
+			if ($parent)
 				$me->makeChildOf ( $parent );
-				$me->save();
-			}
+			$me->save();
 			if (isset ( $node ["children"] ))
 				self::saveTree ( $node ["children"], $me );
 		}
