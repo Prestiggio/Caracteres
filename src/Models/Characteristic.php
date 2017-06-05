@@ -22,11 +22,11 @@ class Characteristic extends Node {
 	 */
 	protected $table = 'ry_caracteres_characteristics';
 	
-	protected $visible = ["id", "term", "multiple", "active", "input", "icon", "position"];
+	//protected $visible = ["id", "term", "multiple", "active", "input", "icon", "position"];
+	
+	protected $hidden = ["parent_id", "depth", "multiple", "created_at", "updated_at"];
 	
 	protected $appends = ["icon", "position"];
-	
-	protected $with = ["term", "rank"];
 	
 	// ////////////////////////////////////////////////////////////////////////////
 	
@@ -128,6 +128,16 @@ class Characteristic extends Node {
 				"descriptif" => $descriptif
 		]]);
 		return $characteristic;
+	}
+	
+	public function newQueryWithoutScopes() {
+		if(!in_array("term", $this->with))
+			$this->with[] = "term";
+		
+		if(!in_array("rank", $this->with))
+			$this->with[] = "rank";
+	
+		return parent::newQueryWithoutScopes();
 	}
 	
 }
