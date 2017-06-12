@@ -1,27 +1,34 @@
-<ul>
-	<li ng-repeat="child in children" rytree src="characteristiceditor" children="child.children">
-		<a class="toggle-accordion" href="#">fold/unfold</a>
-		<div layout="row">
-			<div ng-if="child.id">
-				<md-button ng-click="$root.specifications[child.id]=selectedText">&gt;</md-button>
+<script type="application/tree" id="characteristiceditor">	
+	<ul ng-show="!$parent.pipo">
+		<li ng-repeat="child in children" rytree src="characteristiceditor" ng-if="!child.deleted" children="child.children">
+			<div layout="row" layout-wrap layout-align="start center">
+			<a href="#" ng-click="pipo=!pipo"><md-icon ng-show="!pipo" md-font-icon="fa fa-angle-down"></md-icon><md-icon ng-show="pipo" md-font-icon="fa fa-angle-right"></md-icon></a>
+			<div layout="row" layout-align="start center">
+				<div ng-if="child.id">
+					<md-button class="md-icon-button" ng-click="child.value=$root.selectedText" aria-label="@lang("rycaracteres::overall.assign")"><md-icon md-font-icon="fa fa-long-arrow-right"></md-icon></md-button>
+					<md-input-container>
+						<label>@{{child.term.name}}</label>
+						<input type="text" ng-model="child.value"/>
+					</md-input-container>
+				</div>
+				<div ng-if="!child.id" layout="row" layout-align="start center">
+					<md-button class="md-icon-button" ng-click="child.value=$root.selectedText" aria-label="@lang("rycaracteres::overall.assign")"><md-icon md-font-icon="fa fa-long-arrow-right"></md-icon></md-button>
+					<md-input-container>
+						<label>Clé</label>
+						<input type="text" ng-model="child.term.name" required/>
+					</md-input-container>
+					<md-input-container>
+						<label>Valeur</label>
+						<input type="text" ng-model="child.value"/>
+					</md-input-container>					
+				</div>
 				<md-input-container>
-					<label>@{{child.term.name}}</label>
-					<input type="text" ng-model="$root.specifications[child.id]"/>
+					<md-button class="md-icon-button" ng-click="$root.rediger('Indiquez ' + child.term.name)" aria-label="Questionner l'auteur"><md-icon md-font-icon="fa fa-send"></md-icon></md-button>
 				</md-input-container>
+				<md-button class="md-icon-button" ng-click="child.deleted=true" aria-label="@lang("rycaracteres::overall.removechild")"><md-icon md-font-icon="fa fa-minus-circle"></md-icon></md-button>
+				<md-button class="md-icon-button" ng-click="addChild(child)" aria-label="@lang("rycaracteres::overall.addchild")"><md-icon md-font-icon="fa fa-plus-circle"></md-icon></md-button>
 			</div>
-			<div ng-if="!child.id" layout="row">
-				<md-button ng-click="$root.specifications[child.tempid]=selectedText">&gt;</md-button>
-				<md-input-container>
-					<label>Clé</label>
-					<input type="text" ng-model="child.term.name" required/>
-				</md-input-container>
-				<md-input-container>
-					<label>Valeur</label>
-					<input type="text" ng-model="$root.specifications[child.tempid]"/>
-				</md-input-container>
-				<md-button ng-click="children.splice($index, 1)">-</md-button>
 			</div>
-			<md-button ng-click="addChild(child)">+ child</md-button>
-		</div>
-	</li>
-</ul>
+		</li>
+	</ul>
+</script>
