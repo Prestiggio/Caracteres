@@ -4,6 +4,7 @@ namespace Ry\Caracteres\Models;
 use LaravelLocalization;
 
 use Illuminate\Database\Eloquent\Model;
+use Ry\Caracteres\Models\Specification;
 
 class Specification extends Model {
 	
@@ -14,6 +15,8 @@ class Specification extends Model {
 	protected $visible = ["id", "term", "characteristic"];
 	
 	protected $with = ["term", "characteristic"];
+	
+	private static $sels = [];
 	
 	function characterizable() {
 		return $this->morphTo();
@@ -30,6 +33,50 @@ class Specification extends Model {
 	
 	public function characteristic() {
 		return $this->belongsTo("Ry\Caracteres\Models\Characteristic", "characteristic_id");
+	}
+	
+	private static function searched($ar) {
+		foreach ($ar as $a) {
+			if(isset($a["value"]) && $a["value"]!="") {
+				self::$sels[$a["id"]] = $a["value"];
+			}
+			self::searched($a["children"]);
+		}
+	}
+	
+	public static function forTree($ar, $cast, $notIn=[], $in=[]) {
+		self::$sels = [];
+		self::searched($ar);
+		$characterictic_ids = [];
+		foreach(self::$sels as $characteristic_id => $value) {
+			if(!isset($characterictic_ids[$value]))
+				$characterictic_ids[$value] = [];
+			$characterictic_ids[$value][] = $characteristic_id;
+		}
+		$results = [];
+		foreach($characterictic_ids as $q => $ids) {
+			$q = preg_replace(["/n[\s\n\t]*'[\s\n\t]*ny?/i", "/[\s\t'-\.,:\/]/i"], " ", trim($q));
+			$ar = preg_split("/[\t\s]+/i", $q);
+			$ar = array_filter($ar, function($item){
+				return strlen($item)>2;
+			});
+			
+			$query = Specification::whereIn("characteristic_id", $ids)->where("characterizable_type", "=", $cast);
+			if(count($notIn)>0)
+				$query->whereNotIn("characterizable_id", $notIn);
+			if(count($in)>0)
+				$query->whereIn("characterizable_id", $in);
+			$specs = $query->get();
+			foreach ($specs as $spec) {
+				if($spec->terms()->where("lang", "=", "fr")->where(function($query) use ($ar){
+					foreach ($ar as $a) {
+						$query->orWhereRaw("soundex_match_all(?, value, ' ') > 0", [$a]);
+					}
+				})->count()>0)
+				$results[] = $spec->characterizable;
+			}
+		}
+		return $results;
 	}
 	
 }
