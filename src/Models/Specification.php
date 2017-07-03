@@ -5,6 +5,7 @@ use LaravelLocalization;
 
 use Illuminate\Database\Eloquent\Model;
 use Ry\Caracteres\Models\Specification;
+use Illuminate\Support\Facades\Log;
 
 class Specification extends Model {
 	
@@ -77,6 +78,27 @@ class Specification extends Model {
 			}
 		}
 		return $results;
+	}
+	
+	public static function byValue($q, $cast, $notIn=[], $in=[]) {
+		$results = app("rymd.search")->search("specification", $q);
+		$characterictic_ids = [];
+		foreach($results as $specificationlangs) {
+			foreach($specificationlangs as $specification) {
+				$characterictic_ids[$specification->specification_id] = $specification;			
+			}
+		}
+		$query = Specification::whereIn("id", array_keys($characterictic_ids))->where("characterizable_type", "=", $cast);
+		if(count($notIn)>0)
+			$query->whereNotIn("id", $notIn);
+		if(count($in)>0)
+			$query->whereIn("id", $in);
+		$specs = $query->get();
+		$ar = [];
+		foreach ($specs as $spec) {
+			$ar[] = $spec->characterizable;
+		}
+		return $ar;
 	}
 	
 }
