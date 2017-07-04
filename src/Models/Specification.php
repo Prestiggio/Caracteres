@@ -96,9 +96,21 @@ class Specification extends Model {
 		$specs = $query->get();
 		$ar = [];
 		foreach ($specs as $spec) {
-			$ar[] = $spec->characterizable;
+			$ar[$spec->characterizable->id] = $spec->characterizable;
 		}
-		return $ar;
+		$results = app("rymd.search")->search("characteristic", $q);
+		$characterictic_ids = [];
+		foreach($results as $characteristiclangs) {
+			foreach($characteristiclangs as $characteristic) {
+				$characterictic_ids[$characteristic->characteristic_id] = $characteristic;
+			}
+		}
+		$query = Specification::whereIn("characteristic_id", array_keys($characterictic_ids))->where("characterizable_type", "=", $cast);
+		$specs = $query->get();
+		foreach ($specs as $spec) {
+			$ar[$spec->characterizable->id] = $spec->characterizable;
+		}
+		return array_values($ar);
 	}
 	
 }
