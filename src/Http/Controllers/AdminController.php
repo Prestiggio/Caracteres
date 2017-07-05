@@ -45,7 +45,7 @@ class AdminController extends Controller
 				
 			if (isset ( $a ["id"] ))
 				$characteristic = Characteristic::where ( "id", "=", $a ["id"] )->first ();
-			elseif (isset ( $a ["tempid"] ) && $parent) {
+			elseif (isset ( $a ["tempid"] )) {
 				$characteristic = Characteristic::create ( [
 						"active" => 1,
 						"multiple" => 1,
@@ -58,7 +58,8 @@ class AdminController extends Controller
 								"name" => $a ["term"] ["name"]
 						]
 				] );
-				$characteristic->makeChildOf ( $parent );
+				if($parent)
+					$characteristic->makeChildOf ( $parent );
 				$characteristic->save ();
 			}
 				
