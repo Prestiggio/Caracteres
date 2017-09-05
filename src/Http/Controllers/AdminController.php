@@ -6,16 +6,17 @@ use Illuminate\Http\Request;
 use Ry\Caracteres\Models\Characteristic;
 use Ry\Caracteres\Models\Specification;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 class AdminController extends Controller
 {
 	private $characterizable;
 	
 	public function __construct() {
-		$this->middleware("admin");
+		$this->middleware(["web", "admin"]);
 	}
 	
-	public function getCharacteristics() {
+	public function getCharacteristics(Request $request) {
 		$roots = Characteristic::roots ()->get ();
 		$ar = [ ];
 		foreach ( $roots as $root ) {
@@ -24,7 +25,11 @@ class AdminController extends Controller
 				$ar [] = $v;
 			}
 		}
-		return $ar;
+		return new Collection($ar);
+	}
+	
+	public function getRootCharacteristics() {
+		return Characteristic::roots ()->get ();
 	}
 	
 	public function putSpecs($characterizable, $ar, $parent = null, $lang = null) {

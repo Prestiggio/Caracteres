@@ -11,9 +11,9 @@ class Characteristiclang extends Model
 	
 	protected $fillable = ["user_id", "path", "name", "descriptif", "lang"];
 	
-	protected $visible = ["id", "name", "link", "tree", "descriptif", "lang"];
+	protected $visible = ["id", "name", "link", "descriptif", "lang", "tree"];
 	
-	protected $appends = ["tree", "link"];
+	protected $appends = ["link", "tree"];
 	
 	public function characteristic() {
 		return $this->belongsTo("Ry\Caracteres\Models\Characteristic", "characteristic_id");
