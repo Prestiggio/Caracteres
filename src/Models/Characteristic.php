@@ -3,7 +3,6 @@
 namespace Ry\Caracteres\Models;
 
 use Baum\Node;
-use LaravelLocalization;
 use Ry\Medias\Models\Traits\MediableTrait;
 use Ry\Medias\Models\Media;
 use Ry\Caracteres\Models\Traits\RankableTrait;

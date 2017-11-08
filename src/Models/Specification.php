@@ -1,8 +1,6 @@
 <?php
 namespace Ry\Caracteres\Models;
 
-use LaravelLocalization;
-
 use Illuminate\Database\Eloquent\Model;
 use Ry\Caracteres\Models\Specification;
 use Illuminate\Support\Facades\Log;
