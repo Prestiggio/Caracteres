@@ -7,6 +7,8 @@ use Ry\Caracteres\Models\Characteristic;
 use Ry\Caracteres\Models\Specification;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Ry\Caracteres\Models\Characteristiclang;
+use Ry\Caracteres\Models\Specificationlang;
 
 class AdminController extends Controller
 {
@@ -51,11 +53,13 @@ class AdminController extends Controller
 			if (isset ( $a ["id"] ))
 				$characteristic = Characteristic::where ( "id", "=", $a ["id"] )->first ();
 			elseif (isset ( $a ["tempid"] )) {
+				Characteristic::unguard();
 				$characteristic = Characteristic::create ( [
 						"active" => 1,
 						"multiple" => 1,
 						"input" => "text"
 				] );
+				Characteristiclang::unguard();
 				$characteristic->terms ()->createMany ( [
 						[
 								"user_id" => $user->id,
@@ -66,19 +70,25 @@ class AdminController extends Controller
 				if($parent)
 					$characteristic->makeChildOf ( $parent );
 				$characteristic->save ();
+				Characteristic::reguard();
+				Characteristiclang::reguard();
 			}
 				
 			if (isset ( $a ["value"] ) && $a ["value"] != "") {
 				$specification = $this->characterizable->specifications ()->where("characteristic_id", "=", $characteristic->id)->first();
 				if(!$specification) {
+					Specification::unguard();
 					$specification = $this->characterizable->specifications ()->create ( [
 							"characteristic_id" => $characteristic->id
 					] );
+					Specificationlang::unguard();
 					$specification->terms ()->create ( [
 							"user_id" => $user->id,
 							"lang" => "fr",
 							"value" => $a ["value"]
 					] );
+					Specification::reguard();
+					Specificationlang::reguard();
 				}
 				else {
 					$term = $specification->terms ()->where("lang", "=", "fr")->first();

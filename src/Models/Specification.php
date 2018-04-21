@@ -13,7 +13,7 @@ class Specification extends Model {
 	
 	protected $visible = ["id", "term", "characteristic"];
 	
-	protected $with = ["term", "characteristic"];
+	//protected $with = ["term", "characteristic"];
 	
 	private static $sels = [];
 	

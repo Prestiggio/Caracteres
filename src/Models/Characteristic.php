@@ -95,12 +95,14 @@ class Characteristic extends Node {
 				
 			$me = self::createCharacteristic( $node ["name"] , json_encode($input));
 			if(isset($node["icon"])) {
+				Media::unguard();
 				$me->medias()->create([
 						"owner_id" => 1,
 						"title" => $node["name"],
 						"path" => $node["icon"],
 						"type" => "image"
 				]);
+				Media::reguard();
 			}
 			if ($parent)
 				$me->makeChildOf ( $parent );
@@ -114,18 +116,21 @@ class Characteristic extends Node {
 		$user_id = 1;
 		if (! $lang)
 			$lang = "fr";
-	
+		Characteristic::unguard();
 		$characteristic = Characteristic::create ( [
 				"active" => 1,
 				"multiple" => 1,
 				"input" => $input
 		] );
+		CharacteristicLang::unguard();
 		$characteristic->terms ()->createMany ([[
 				"user_id" => $user_id,
 				"lang" => $lang,
 				"name" => $name,
 				"descriptif" => $descriptif
 		]]);
+		Characteristic::reguard();
+		CharacteristicLang::reguard();
 		return $characteristic;
 	}
 	
