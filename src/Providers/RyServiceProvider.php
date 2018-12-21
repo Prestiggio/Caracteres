@@ -2,10 +2,10 @@
 namespace Ry\Caracteres\Providers;
 
 //use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use Ry\Caracteres\Models\Characteristiclang;
 use Ry\Caracteres\Models\Characteristic;
+use Illuminate\Support\ServiceProvider;
 
 class RyServiceProvider extends ServiceProvider
 {
@@ -14,11 +14,9 @@ class RyServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
-    	parent::boot($router);
-    	
-    	$router->bind("characteristic", function($value){
+        $this->app["router"]->bind("characteristic", function($value){
     		return Characteristiclang::where("path", "=", $value)->first()->characteristic;
     	});
     	

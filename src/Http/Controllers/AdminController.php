@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Ry\Caracteres\Models\Characteristic;
 use Ry\Caracteres\Models\Specification;
-use Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Ry\Caracteres\Models\Characteristiclang;
 use Ry\Caracteres\Models\Specificationlang;
@@ -16,6 +15,11 @@ class AdminController extends Controller
 	
 	public function __construct() {
 		$this->middleware(["web", "admin"]);
+	}
+	
+	public function controller_action($action, Request $request) {
+	    $method_name = $request->getMethod() . camel_case($action);
+	    return $this->$method_name($request);
 	}
 	
 	public function getCharacteristics(Request $request) {
