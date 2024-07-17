@@ -1,7 +1,6 @@
 {
     "name": "prestiggio/caracteres",
     "description": "caracterizable items",
-    "type": "php, laravel5",
     "authors": [
         {
             "name": "Landr Kotoarivelo",
