@@ -15,12 +15,6 @@
     "require": {
     	"mcamara/laravel-localization": "*",
     	"baum/baum": "*",
-    	"ry/medias": "dev-prefixed"
-    },
-    "repositories": [
-	    {
-		    "type": "vcs",
-		    "url": "git@topmora.com:/opt/git/modules/ry/medias.git"
-		}
-	]
+    	"prestiggio/medias": "dev-prefixed"
+    }
 }
